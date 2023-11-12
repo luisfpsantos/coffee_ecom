@@ -41,6 +41,7 @@ class HomeController extends ChangeNotifier {
           price: double.parse(coffe['price'].toString()),
           imagePath: coffe['imagePath'],
           type: coffe['type'],
+          discription: coffe['description'],
         );
       }).toList();
 

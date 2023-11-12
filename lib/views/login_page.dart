@@ -1,3 +1,4 @@
+import 'package:coffe_ecom/widgets/app_layout.dart';
 import 'package:coffe_ecom/widgets/background_container.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -81,6 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                             Expanded(
                               child: ElevatedButton(
                                 onPressed: () {
+                                  bottomNavigationIndex = 0;
                                   context.pushReplacement('/');
                                 },
                                 style: ElevatedButton.styleFrom(

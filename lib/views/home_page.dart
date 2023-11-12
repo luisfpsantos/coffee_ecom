@@ -1,6 +1,7 @@
 import 'package:coffe_ecom/controllers/home_controller.dart';
 import 'package:coffe_ecom/widgets/app_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,51 +14,59 @@ class _HomePageState extends State<HomePage> {
   final _coffeController = HomeController();
   int _pageIndex = 1;
 
-  Widget _buildOption(String title, String image, String price) {
-    return Container(
-      padding: const EdgeInsets.all(5),
-      decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(15),
-      ),
-      height: 150,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
+  Widget _buildOption({
+    required String title,
+    required String image,
+    required String price,
+    required void Function() ontap,
+  }) {
+    return InkWell(
+      onTap: ontap,
+      child: Container(
+        padding: const EdgeInsets.all(5),
+        decoration: BoxDecoration(
+          color: Colors.black.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        height: 150,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          Image.asset(
-            image,
-            scale: 6,
-          ),
-          Text(
-            price,
-            style: const TextStyle(
-              color: Colors.white,
+            Image.asset(
+              image,
+              scale: 6,
             ),
-          )
-        ],
+            Text(
+              price,
+              style: const TextStyle(
+                color: Colors.white,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildButton(bool selected, void Function() ontap) {
+  Widget _buildButton(String title, bool selected, void Function() ontap) {
     return FilledButton(
       style: FilledButton.styleFrom(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         backgroundColor: selected ? const Color(0xff854C1F) : const Color(0xff1A2438),
       ),
       onPressed: ontap,
-      child: const Text(
-        'Bebidas Quentes',
+      child: Text(
+        title,
         textAlign: TextAlign.center,
-        style: TextStyle(fontSize: 16),
+        style: const TextStyle(fontSize: 16),
       ),
     );
   }
@@ -158,7 +167,10 @@ class _HomePageState extends State<HomePage> {
                         padding: EdgeInsets.only(left: 5),
                         child: Text(
                           'Tipos de café',
-                          style: TextStyle(fontSize: 25),
+                          style: TextStyle(
+                            fontSize: 25,
+                            color: Color(0xff8C4D21),
+                          ),
                         ),
                       ),
                       const SizedBox(height: 10),
@@ -166,6 +178,7 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Expanded(
                             child: _buildButton(
+                              'Bebidas quentes',
                               _pageIndex == 1,
                               () => _searchCoffes('hot_coffe', _pageIndex),
                             ),
@@ -173,6 +186,7 @@ class _HomePageState extends State<HomePage> {
                           const SizedBox(width: 5),
                           Expanded(
                             child: _buildButton(
+                              'Bebidas geladas',
                               _pageIndex == 2,
                               () => _searchCoffes('cold_coffe', _pageIndex),
                             ),
@@ -180,13 +194,20 @@ class _HomePageState extends State<HomePage> {
                           const SizedBox(width: 5),
                           Expanded(
                             child: _buildButton(
+                              'Bebidas especiais',
                               _pageIndex == 3,
                               () => _searchCoffes('special_drinks', _pageIndex),
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 15),
+                      const SizedBox(height: 10),
+                      const Divider(
+                        color: Colors.brown,
+                        indent: 25,
+                        endIndent: 25,
+                      ),
+                      const SizedBox(height: 10),
                       GridView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
@@ -199,9 +220,12 @@ class _HomePageState extends State<HomePage> {
                         itemBuilder: (context, i) {
                           final coffe = _coffeController.coffes[i];
                           return _buildOption(
-                            coffe.title,
-                            coffe.imagePath,
-                            'R\$: ${coffe.price.toStringAsFixed(2)}',
+                            title: coffe.title,
+                            image: coffe.imagePath,
+                            price: 'R\$: ${coffe.price.toStringAsFixed(2)}',
+                            ontap: () {
+                              context.push('/coffeDetails', extra: coffe);
+                            },
                           );
                         },
                         itemCount: _coffeController.coffes.length,
