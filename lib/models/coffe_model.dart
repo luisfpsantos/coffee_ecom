@@ -1,13 +1,13 @@
-import 'package:flutter/material.dart';
-
 class CoffeModel {
   final double price;
-  final Image image;
+  final String imagePath;
+  final String title;
   final String type;
 
   CoffeModel({
+    required this.title,
     required this.price,
-    required this.image,
+    required this.imagePath,
     required this.type,
   });
 }
