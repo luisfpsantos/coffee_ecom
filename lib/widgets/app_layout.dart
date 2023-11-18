@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:coffe_ecom/main.dart';
 import 'package:coffe_ecom/widgets/background_container.dart';
 import 'package:flutter/material.dart';
@@ -26,10 +25,6 @@ class AppLayout extends StatefulWidget {
 class _AppLayoutState extends State<AppLayout> {
   @override
   Widget build(BuildContext context) {
-    final userIcon = widget.showUserIcon
-        ? IconButton(onPressed: () {}, icon: const Icon(Icons.account_circle))
-        : Container();
-
     return BackgroundContainer(
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -39,7 +34,6 @@ class _AppLayoutState extends State<AppLayout> {
           backgroundColor: Colors.transparent,
           centerTitle: true,
           title: widget.appBarTitle,
-          actions: [userIcon],
         ),
         body: Container(
           color: Colors.black.withOpacity(0.2),
@@ -85,10 +79,6 @@ class _AppLayoutState extends State<AppLayout> {
                       icon: Icon(Icons.person_2_outlined),
                       label: '2',
                     ),
-                    const BottomNavigationBarItem(
-                      icon: Icon(Icons.favorite_border_outlined),
-                      label: '3',
-                    ),
                     BottomNavigationBarItem(
                       icon: Stack(
                         alignment: Alignment.center,
@@ -122,7 +112,7 @@ class _AppLayoutState extends State<AppLayout> {
                               : Container(),
                         ],
                       ),
-                      label: '4',
+                      label: '3',
                     ),
                   ],
                   onTap: (value) {
@@ -137,8 +127,11 @@ class _AppLayoutState extends State<AppLayout> {
                         case 0:
                           context.pushReplacement('/');
                           break;
-                        case 3:
+                        case 2:
                           context.pushReplacement('/cartCheckout');
+                          break;
+                        case 1:
+                          context.pushReplacement('/user');
                       }
                     }
                   },

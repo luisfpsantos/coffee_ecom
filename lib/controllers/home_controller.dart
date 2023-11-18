@@ -8,10 +8,12 @@ class HomeController extends ChangeNotifier {
   List<CoffeModel> _coffes = [];
   bool _isLoading = false;
   String _errorMsg = '';
+  List<CoffeModel> _filteredCoffes = [];
 
   List<CoffeModel> get coffes => _coffes;
   bool get isLoading => _isLoading;
   String get errorMsg => _errorMsg;
+  List<CoffeModel> get filteredCoffes => _filteredCoffes;
 
   set coffes(List<CoffeModel> coffes) {
     _coffes = coffes;
@@ -25,6 +27,11 @@ class HomeController extends ChangeNotifier {
 
   set errorMsg(String value) {
     _errorMsg = value;
+    notifyListeners();
+  }
+
+  set filteredCoffes(List<CoffeModel> coffes) {
+    _filteredCoffes = coffes;
     notifyListeners();
   }
 
@@ -49,5 +56,16 @@ class HomeController extends ChangeNotifier {
     } catch (e) {
       errorMsg = e.toString();
     }
+  }
+
+  void searchCoffes(String value) {
+    if (value.isEmpty) {
+      filteredCoffes = [];
+      return;
+    }
+
+    final filtered = coffes.where((e) => e.title.toLowerCase().contains(value)).toList();
+
+    filteredCoffes = filtered;
   }
 }

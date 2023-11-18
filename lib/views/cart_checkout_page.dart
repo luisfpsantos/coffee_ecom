@@ -2,6 +2,7 @@ import 'package:coffe_ecom/main.dart';
 import 'package:coffe_ecom/models/cart_model.dart';
 import 'package:coffe_ecom/widgets/app_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CartCheckoutPage extends StatefulWidget {
   const CartCheckoutPage({super.key});
@@ -170,7 +171,9 @@ class _CartCheckoutPageState extends State<CartCheckoutPage> {
                   children: [
                     Expanded(
                       child: FilledButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          context.push('/payment');
+                        },
                         style: FilledButton.styleFrom(
                           backgroundColor: const Color(0xff8C4D21),
                           fixedSize: const Size(double.infinity, 50),

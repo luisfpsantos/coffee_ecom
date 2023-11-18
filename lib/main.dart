@@ -1,15 +1,19 @@
 import 'package:coffe_ecom/controllers/cart_controller.dart';
+import 'package:coffe_ecom/controllers/user_controller.dart';
 import 'package:coffe_ecom/firebase_options.dart';
 import 'package:coffe_ecom/models/coffe_model.dart';
 import 'package:coffe_ecom/views/cart_checkout_page.dart';
 import 'package:coffe_ecom/views/description_page.dart';
 import 'package:coffe_ecom/views/home_page.dart';
 import 'package:coffe_ecom/views/login_page.dart';
+import 'package:coffe_ecom/views/payment_page.dart';
+import 'package:coffe_ecom/views/user_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 final cartController = CartController();
+final userController = UserController();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,7 +49,15 @@ class _AppWidgetState extends State<AppWidget> {
       GoRoute(
         path: '/cartCheckout',
         builder: (context, state) => const CartCheckoutPage(),
-      )
+      ),
+      GoRoute(
+        path: '/user',
+        builder: (context, state) => const UserPage(),
+      ),
+      GoRoute(
+        path: '/payment',
+        builder: (context, state) => const PaymentPage(),
+      ),
     ],
   );
 

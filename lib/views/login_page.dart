@@ -1,3 +1,5 @@
+import 'package:coffe_ecom/controllers/login_controller.dart';
+import 'package:coffe_ecom/main.dart';
 import 'package:coffe_ecom/widgets/app_layout.dart';
 import 'package:coffe_ecom/widgets/background_container.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +13,37 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _loginController = LoginController();
+  final _inputUser = TextEditingController();
+  final _inputPassword = TextEditingController();
+
+  @override
+  void initState() {
+    _loginController.addListener(() {
+      if (userController.loggedUser != null) {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        bottomNavigationIndex = 0;
+        context.pushReplacement('/');
+      }
+      if (_loginController.errorMsg.isNotEmpty) {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(
+            _loginController.errorMsg,
+            style: const TextStyle(fontSize: 20),
+          ),
+        ));
+      }
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _loginController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,6 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: Column(
                       children: [
                         TextFormField(
+                          controller: _inputUser,
                           cursorColor: Colors.white,
                           style: const TextStyle(color: Colors.white),
                           decoration: InputDecoration(
@@ -59,6 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         const SizedBox(height: 20),
                         TextFormField(
+                          controller: _inputPassword,
                           obscureText: true,
                           cursorColor: Colors.white,
                           style: const TextStyle(color: Colors.white),
@@ -77,31 +112,40 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         const SizedBox(height: 35),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  bottomNavigationIndex = 0;
-                                  context.pushReplacement('/');
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  foregroundColor: const Color(0xffFFD79C),
-                                  elevation: 9,
-                                  fixedSize: const Size.fromHeight(55),
-                                  backgroundColor: const Color(0xff854C1F),
-                                  shadowColor: const Color.fromARGB(255, 240, 137, 59),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
+                        ListenableBuilder(
+                          listenable: _loginController,
+                          builder: (context, child) => Row(
+                            children: [
+                              Expanded(
+                                child: ElevatedButton(
+                                  onPressed: _loginController.isLoading
+                                      ? () {}
+                                      : () {
+                                          final user = _inputUser.text;
+                                          final password = _inputPassword.text;
+
+                                          _loginController.doLogin(user, password);
+                                        },
+                                  style: ElevatedButton.styleFrom(
+                                    foregroundColor: const Color(0xffFFD79C),
+                                    elevation: 9,
+                                    fixedSize: const Size.fromHeight(55),
+                                    backgroundColor: const Color(0xff854C1F),
+                                    shadowColor: const Color.fromARGB(255, 240, 137, 59),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
                                   ),
-                                ),
-                                child: const Text(
-                                  'Entrar',
-                                  style: TextStyle(color: Colors.white, fontSize: 20),
+                                  child: _loginController.isLoading
+                                      ? CircularProgressIndicator(color: Colors.brown[50])
+                                      : const Text(
+                                          'Entrar',
+                                          style: TextStyle(color: Colors.white, fontSize: 20),
+                                        ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         )
                       ],
                     ),

@@ -12,6 +12,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _coffeController = HomeController();
+  final searchController = TextEditingController();
   int _pageIndex = 1;
 
   Widget _buildOption({
@@ -75,16 +76,22 @@ class _HomePageState extends State<HomePage> {
     if (coffeType == 'hot_coffe' && currentPageIndex != 1) {
       _coffeController.getCoffes(coffeType);
       _pageIndex = 1;
+      searchController.text = '';
+      _coffeController.filteredCoffes.clear();
     }
 
     if (coffeType == 'cold_coffe' && currentPageIndex != 2) {
       _coffeController.getCoffes(coffeType);
       _pageIndex = 2;
+      searchController.text = '';
+      _coffeController.filteredCoffes.clear();
     }
 
     if (coffeType == 'special_drinks' && currentPageIndex != 3) {
       _coffeController.getCoffes(coffeType);
       _pageIndex = 3;
+      searchController.text = '';
+      _coffeController.filteredCoffes.clear();
     }
   }
 
@@ -127,8 +134,10 @@ class _HomePageState extends State<HomePage> {
         listenable: _coffeController,
         builder: (context, child) {
           if (_coffeController.isLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
+            return Center(
+              child: CircularProgressIndicator(
+                color: Colors.brown[400],
+              ),
             );
           }
           if (_coffeController.errorMsg.isNotEmpty) {
@@ -141,9 +150,14 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               children: [
                 TextField(
+                  controller: searchController,
+                  onChanged: (value) {
+                    _coffeController.searchCoffes(value.toLowerCase());
+                  },
                   style: const TextStyle(color: Color.fromARGB(255, 116, 64, 27)),
                   cursorColor: Colors.white,
                   decoration: InputDecoration(
+                    hintText: 'Pesquise sua bebida',
                     isDense: true,
                     filled: true,
                     fillColor: Colors.black.withOpacity(0.1),
@@ -154,7 +168,10 @@ class _HomePageState extends State<HomePage> {
                     suffixIcon: IconButton(
                       highlightColor: Colors.transparent,
                       icon: const Icon(Icons.search, size: 30),
-                      onPressed: () {},
+                      onPressed: () {
+                        final value = searchController.text.toLowerCase();
+                        _coffeController.searchCoffes(value);
+                      },
                     ),
                     suffixIconConstraints: const BoxConstraints(minWidth: 70),
                   ),
@@ -166,7 +183,7 @@ class _HomePageState extends State<HomePage> {
                       const Padding(
                         padding: EdgeInsets.only(left: 5),
                         child: Text(
-                          'Tipos de café',
+                          'Categorias',
                           style: TextStyle(
                             fontSize: 25,
                             color: Color(0xff8C4D21),
@@ -218,7 +235,11 @@ class _HomePageState extends State<HomePage> {
                           childAspectRatio: 0.6,
                         ),
                         itemBuilder: (context, i) {
-                          final coffe = _coffeController.coffes[i];
+                          print(_coffeController.filteredCoffes);
+                          final coffe = _coffeController.filteredCoffes.isNotEmpty
+                              ? _coffeController.filteredCoffes[i]
+                              : _coffeController.coffes[i];
+
                           return _buildOption(
                             title: coffe.title,
                             image: coffe.imagePath,
@@ -228,7 +249,9 @@ class _HomePageState extends State<HomePage> {
                             },
                           );
                         },
-                        itemCount: _coffeController.coffes.length,
+                        itemCount: _coffeController.filteredCoffes.isNotEmpty
+                            ? _coffeController.filteredCoffes.length
+                            : _coffeController.coffes.length,
                       ),
                     ],
                   ),
