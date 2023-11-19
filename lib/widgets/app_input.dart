@@ -3,12 +3,20 @@ import 'package:flutter/material.dart';
 class AppInput extends StatelessWidget {
   final String label;
   final TextInputType keyboardType;
+  final bool obscureText;
   final String? Function(String? value)? validator;
-  const AppInput({super.key, required this.label, this.validator, required this.keyboardType});
+  const AppInput({
+    super.key,
+    required this.label,
+    this.validator,
+    required this.keyboardType,
+    this.obscureText = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      obscureText: obscureText,
       validator: validator,
       cursorColor: Colors.white,
       style: const TextStyle(color: Colors.white),

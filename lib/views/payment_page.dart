@@ -365,26 +365,28 @@ class _PaymentPageState extends State<PaymentPage> {
                               ),
                       ),
                       const SizedBox(height: 50),
-                      Center(
-                        child: FilledButton(
-                          onPressed: () {
-                            setState(() {
-                              success = true;
-                            });
-                          },
-                          style: FilledButton.styleFrom(
-                            backgroundColor: const Color(0xff8C4D21),
-                            fixedSize: const Size(double.infinity, 50),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          child: Text(
-                            'Comprar R\$: ${cartController.getCartTotalValue().toStringAsFixed(2)}',
-                            style: const TextStyle(fontSize: 18),
-                          ),
-                        ),
-                      ),
+                      payment != null && address != null
+                          ? Center(
+                              child: FilledButton(
+                                onPressed: () {
+                                  setState(() {
+                                    success = true;
+                                  });
+                                },
+                                style: FilledButton.styleFrom(
+                                  backgroundColor: const Color(0xff8C4D21),
+                                  fixedSize: const Size(double.infinity, 50),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                ),
+                                child: Text(
+                                  'Comprar R\$: ${cartController.getCartTotalValue().toStringAsFixed(2)}',
+                                  style: const TextStyle(fontSize: 18),
+                                ),
+                              ),
+                            )
+                          : Container(),
                     ],
                   ),
                 ),

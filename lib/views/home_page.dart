@@ -235,7 +235,6 @@ class _HomePageState extends State<HomePage> {
                           childAspectRatio: 0.6,
                         ),
                         itemBuilder: (context, i) {
-                          print(_coffeController.filteredCoffes);
                           final coffe = _coffeController.filteredCoffes.isNotEmpty
                               ? _coffeController.filteredCoffes[i]
                               : _coffeController.coffes[i];

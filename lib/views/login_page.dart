@@ -146,7 +146,33 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ],
                           ),
-                        )
+                        ),
+                        const SizedBox(height: 10),
+                        const Text(
+                          'ou',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 17,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        ElevatedButton(
+                          onPressed: () => context.push('/register'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black12,
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide.none,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          child: const Text(
+                            'Clique aqui para se cadastrar.',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 17,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   )

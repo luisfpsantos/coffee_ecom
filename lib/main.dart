@@ -7,6 +7,7 @@ import 'package:coffe_ecom/views/description_page.dart';
 import 'package:coffe_ecom/views/home_page.dart';
 import 'package:coffe_ecom/views/login_page.dart';
 import 'package:coffe_ecom/views/payment_page.dart';
+import 'package:coffe_ecom/views/register_page.dart';
 import 'package:coffe_ecom/views/user_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -58,6 +59,10 @@ class _AppWidgetState extends State<AppWidget> {
         path: '/payment',
         builder: (context, state) => const PaymentPage(),
       ),
+      GoRoute(
+        path: '/register',
+        builder: (context, state) => const RegisterPage(),
+      )
     ],
   );
 
