@@ -6,6 +6,7 @@ import 'package:coffe_ecom/views/cart_checkout_page.dart';
 import 'package:coffe_ecom/views/description_page.dart';
 import 'package:coffe_ecom/views/home_page.dart';
 import 'package:coffe_ecom/views/login_page.dart';
+import 'package:coffe_ecom/views/manager_page.dart';
 import 'package:coffe_ecom/views/my_requests_page.dart';
 import 'package:coffe_ecom/views/payment_page.dart';
 import 'package:coffe_ecom/views/register_page.dart';
@@ -67,6 +68,10 @@ class _AppWidgetState extends State<AppWidget> {
       GoRoute(
         path: '/myRequests',
         builder: (context, state) => const MyRequestsPage(),
+      ),
+      GoRoute(
+        path: '/manager',
+        builder: (context, state) => const ManagerPage(),
       ),
     ],
   );

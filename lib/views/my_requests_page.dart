@@ -84,6 +84,11 @@ class _MyRequestsPageState extends State<MyRequestsPage> {
                   fontSize: 20,
                 ),
               ),
+              const Divider(
+                color: Colors.grey,
+                endIndent: 5,
+                indent: 5,
+              ),
               const SizedBox(height: 5),
               ...items.map(
                 (item) => Container(

@@ -263,6 +263,28 @@ class _UserPageState extends State<UserPage> {
                 )
               ],
             ),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Gerenciamento',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 22,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    context.push('/manager');
+                  },
+                  icon: const Icon(
+                    Icons.arrow_forward_ios,
+                    color: Colors.white,
+                  ),
+                )
+              ],
+            ),
           ],
         ),
       ),
