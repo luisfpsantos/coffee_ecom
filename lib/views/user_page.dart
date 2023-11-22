@@ -240,7 +240,29 @@ class _UserPageState extends State<UserPage> {
               child: Column(
                 children: payments,
               ),
-            )
+            ),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Meus Pedidos',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 22,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    context.push('/myRequests');
+                  },
+                  icon: const Icon(
+                    Icons.arrow_forward_ios,
+                    color: Colors.white,
+                  ),
+                )
+              ],
+            ),
           ],
         ),
       ),
