@@ -16,6 +16,7 @@ enum CoffeSize {
 }
 
 class CoffeModel {
+  final String id;
   final double price;
   final String imagePath;
   final String title;
@@ -24,6 +25,7 @@ class CoffeModel {
   CoffeSize size;
 
   CoffeModel({
+    required this.id,
     required this.title,
     required this.price,
     required this.imagePath,
@@ -31,4 +33,13 @@ class CoffeModel {
     required this.discription,
     this.size = CoffeSize.small,
   });
+
+  factory CoffeModel.fromMap(map) => CoffeModel(
+        id: map['id'],
+        title: map['title'],
+        price: double.parse(map['price'].toString()),
+        imagePath: map['imagePath'],
+        type: map['type'],
+        discription: map['description'],
+      );
 }

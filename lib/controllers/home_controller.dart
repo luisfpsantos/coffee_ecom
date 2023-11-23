@@ -43,13 +43,8 @@ class HomeController extends ChangeNotifier {
 
       coffes = docs.map((e) {
         final coffe = e.data();
-        return CoffeModel(
-          title: coffe['title'],
-          price: double.parse(coffe['price'].toString()),
-          imagePath: coffe['imagePath'],
-          type: coffe['type'],
-          discription: coffe['description'],
-        );
+        coffe['id'] = e.id;
+        return CoffeModel.fromMap(coffe);
       }).toList();
 
       isLoading = false;

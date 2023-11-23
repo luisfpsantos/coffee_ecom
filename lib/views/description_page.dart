@@ -113,6 +113,7 @@ class _DescriptionPageState extends State<DescriptionPage> {
                   child: FilledButton(
                     onPressed: () {
                       final newCoffe = CoffeModel(
+                        id: coffe.id,
                         title: coffe.title,
                         price: coffe.price,
                         imagePath: coffe.imagePath,

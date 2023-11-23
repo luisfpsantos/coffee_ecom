@@ -18,6 +18,8 @@ extension RegisterModelExtension on RegisterModel {
       'password': password,
       'payments': [],
       'user': user,
+      'myRequests': [],
+      'admin': false,
     };
   }
 }
