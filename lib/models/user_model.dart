@@ -6,11 +6,13 @@ class UserModel {
   final String name;
   final List<AddresModel> addresses;
   final List<PaymentModel> payments;
+  final bool isAdmin;
 
   UserModel({
     required this.id,
     required this.name,
     required this.addresses,
     required this.payments,
+    required this.isAdmin,
   });
 }

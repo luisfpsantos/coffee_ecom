@@ -50,6 +50,7 @@ class LoginController extends ChangeNotifier {
 
     userController.loggedUser = UserModel(
       id: doc.first.id,
+      isAdmin: loggedUser['admin'],
       name: loggedUser['name'],
       addresses: loggedUser['addresses']
           .map<AddresModel>(
